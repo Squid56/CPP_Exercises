@@ -10,7 +10,7 @@ public:
 		std::cout << "A destructed" << std::endl;
 	}
 
-	void foo()
+	virtual void foo()
 	{
 		std::cout << "foo. A" << std::endl;
 	}
@@ -25,6 +25,7 @@ public:
 
 	virtual ~C(){
 		DELETE(name);
+		std::cout << "C destructed" << std::endl;
 	}
 
 	void print(){
@@ -51,7 +52,7 @@ public:
 		tmpC->print();
 	}
 
-	void takeCval( C tmp )
+	void takeCval( C& tmp )
 	{
 		tmp.print();
 	}
@@ -84,20 +85,30 @@ int main(int argc, char* argv[])
 	std::cout << std::endl << std::endl << "Problem part A" << std::endl;
 	C c;
 	B b;
-	// step 1
+
+	// step 1 - We pass the object instance here - if we don't use the object instance ref,
+	// the destructor gets called on the object when it leaves scope and the outside reference becomes invalid
+	// causing an exception
+	// The name variable of the class C object is printed
 	b.takeCval(c);
 
-	// step 2
+	// step 2 - Here we pass the pointer to object c and the function in b uses pointer notation to call class C's print function
 	b.takeCptr(&c);
 
-	// step 3
+	// step 3 - Here we pass c by reference, using the function argument to specify this
+	// we can use standard dot notation to call C's method
 	b.takeCref(c);
 
 	std::cout << "Problem part B" << std::endl;
 	A *a = new B();
-	// step 4
-	a->foo();
+	// step 4 - 
+	// Since Class B inherits from A, the Class A version of the foo() function gets called since we declared 'a' as type A
+	// even as we instantiate with Class B - this is very confusing behavior and should be avoided.  If the intent is to call
+	// B's foo() function, the following would be the correct method - note we have to turn A into a polymorphic class to
+	// achieve this (by adding the virtual keyword to foo())
+	dynamic_cast<B*>(a)->foo(); // - ICK!
 	delete a;
+
 
 
 }

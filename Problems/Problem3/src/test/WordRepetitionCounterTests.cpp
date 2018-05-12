@@ -23,5 +23,8 @@ class WordRepetitionCounterTest : public ::testing::Test {
 
 
 TEST_F(WordRepetitionCounterTest, givenAWordShouldCountTheNumberOfTimesItIsRepeated){
-	EXPECT_EQ(5, WordRepetitionCounter(paragraph).getCountOf("hotel")); // check count of hotel
+	EXPECT_NE(5, WordRepetitionCounter(paragraph).getCountOf("hotel")); // check count of hotel
+	EXPECT_EQ(2, WordRepetitionCounter(paragraph).getCountOf("hotel")); // check CORRECT count of hotel
+	EXPECT_EQ(5, WordRepetitionCounter(paragraph).getCountOf("I")); // check count of I
+	EXPECT_EQ(0, WordRepetitionCounter(paragraph).getCountOf("seagull")); // make sure there are no seagulls!
 }
