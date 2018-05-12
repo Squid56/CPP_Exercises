@@ -1,3 +1,5 @@
+#Note - Solution overhauled to use VS 2017
+
 #Problems Overview
 > There are 5 programming problems in this package. Each problem will approximately take 30 minutes to solve. You are allowed
 > to use google for reference. Problem description can be found in the problem folder's readme.md file. *readme.md* files are markdown files that 
